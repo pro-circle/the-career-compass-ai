@@ -17,8 +17,9 @@ export function resolveTheme(t: Theme): "light" | "dark" {
 export function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;
   const resolved = resolveTheme(t);
+  // `color-scheme` is driven by CSS (:root / .dark in styles.css) so we never
+  // touch inline styles — that would cause an SSR hydration mismatch.
   document.documentElement.classList.toggle("dark", resolved === "dark");
-  document.documentElement.style.colorScheme = resolved;
 }
 
 export function setTheme(t: Theme) {
@@ -34,6 +35,5 @@ export const THEME_BOOTSTRAP_SCRIPT = `
   var s=localStorage.getItem("${KEY}");
   var t = (s==="light"||s==="dark") ? s : (window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
   document.documentElement.classList.toggle("dark", t==="dark");
-  document.documentElement.style.colorScheme=t;
 }catch(e){}})();
 `;
