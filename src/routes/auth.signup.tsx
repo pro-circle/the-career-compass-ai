@@ -29,7 +29,13 @@ function SignupPage() {
     setBusy(true);
     try {
       const res = await signup({
-        data: { email, password, fullName, role },
+        data: {
+          email,
+          password,
+          fullName,
+          role,
+          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+        },
       });
       if (!res.ok) {
         toast.error(res.error);
