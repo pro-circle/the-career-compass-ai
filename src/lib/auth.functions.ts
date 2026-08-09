@@ -9,6 +9,10 @@ const credentials = z.object({
 const signupInput = credentials.extend({
   fullName: z.string().min(1).max(120),
   role: z.enum(["employer", "candidate"]),
+  // Where Supabase should send the user after they click the confirmation
+  // link. Comes from the browser (window.location.origin) so it always
+  // matches the site the user actually signed up on.
+  redirectTo: z.string().url().optional(),
 });
 
 export const login = createServerFn({ method: "POST" })
