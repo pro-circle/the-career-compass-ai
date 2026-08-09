@@ -111,7 +111,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // The inline theme bootstrap script mutates <html> class / colorScheme
+    // before React hydrates, so those two attributes legitimately differ
+    // between the SSR markup and the client. Suppress the mismatch warning.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
