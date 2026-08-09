@@ -72,7 +72,10 @@ export const signup = createServerFn({ method: "POST" })
     const { data: res, error } = await auth.auth.signUp({
       email: data.email,
       password: data.password,
-      options: { data: { full_name: data.fullName, role: data.role } },
+      options: {
+        data: { full_name: data.fullName, role: data.role },
+        ...(data.redirectTo ? { emailRedirectTo: data.redirectTo } : {}),
+      },
     });
     if (error) return { ok: false as const, error: error.message };
     if (!res.user) {
