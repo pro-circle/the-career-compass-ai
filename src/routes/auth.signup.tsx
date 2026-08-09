@@ -34,7 +34,8 @@ function SignupPage() {
           password,
           fullName,
           role,
-          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+          redirectTo:
+            typeof window !== "undefined" ? `${window.location.origin}/auth/login` : undefined,
         },
       });
       if (!res.ok) {
